@@ -26,7 +26,6 @@
 		BBDA7C0923939FF60031A8FF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBDA7C0823939FF60031A8FF /* Preview Assets.xcassets */; };
 		BBDA7C0C23939FF60031A8FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBDA7C0A23939FF60031A8FF /* LaunchScreen.storyboard */; };
 		BBE2A7A3240530C4004A7E93 /* SpotifyiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE2A7A2240530C4004A7E93 /* SpotifyiOS.swift */; };
-		BBE2A7AA2405504A004A7E93 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BBE2A7A92405504A004A7E93 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,7 +89,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBE2A7AA2405504A004A7E93 /* SnapKit in Frameworks */,
 				BB516DBE2417954200E7D29F /* SpotifyiOS.framework in Frameworks */,
 				BB516DB22417930300E7D29F /* LyricsUI.framework in Frameworks */,
 			);
@@ -240,7 +238,6 @@
 			);
 			name = "LyricsX-iOS";
 			packageProductDependencies = (
-				BBE2A7A92405504A004A7E93 /* SnapKit */,
 			);
 			productName = "LyricsX-iOS";
 			productReference = BBDA7BFC23939FF20031A8FF /* LyricsX-iOS.app */;
@@ -662,11 +659,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BBE2A79A2405305F004A7E93 /* XCRemoteSwiftPackageReference "MusicPlayer" */;
 			productName = MusicPlayer;
-		};
-		BBE2A7A92405504A004A7E93 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BBE2A7A82405504A004A7E93 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
