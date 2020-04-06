@@ -10,14 +10,14 @@
 		BB516DB22417930300E7D29F /* LyricsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB516DAB2417930300E7D29F /* LyricsUI.framework */; };
 		BB516DB32417930300E7D29F /* LyricsUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BB516DAB2417930300E7D29F /* LyricsUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BB516DB9241793A900E7D29F /* LyricsKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB516DB8241793A900E7D29F /* LyricsKit */; };
-		BB516DBD2417952600E7D29F /* LyricsKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB516DBC2417952600E7D29F /* LyricsKit */; };
 		BB516DBE2417954200E7D29F /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE2A79E240530A7004A7E93 /* SpotifyiOS.framework */; };
 		BB516DC5241E898C00E7D29F /* NSLayoutConstraintExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE2A7B024056483004A7E93 /* NSLayoutConstraintExtensions.swift */; };
 		BB516DC6241E89AB00E7D29F /* DefaultArtworkImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA7C172393A6AC0031A8FF /* DefaultArtworkImage.swift */; };
 		BB516DC7241E89AD00E7D29F /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE2A7AE24055BC3004A7E93 /* LyricsView.swift */; };
+		BB54C11D243AF92F007A605A /* CXExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = BB54C11C243AF92F007A605A /* CXExtensions */; };
+		BB54C11F243AF94F007A605A /* MusicPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = BB54C11E243AF94F007A605A /* MusicPlayer */; };
 		BB736314240A247A00845977 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB736313240A247A00845977 /* AppController.swift */; };
 		BB736316240A268D00845977 /* CombineExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB736315240A268D00845977 /* CombineExtensions.swift */; };
-		BB736319240A27AB00845977 /* CXExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = BB736318240A27AB00845977 /* CXExtensions */; };
 		BB73631B240A296800845977 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB73631A240A296800845977 /* Global.swift */; };
 		BBDA7C0023939FF20031A8FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA7BFF23939FF20031A8FF /* AppDelegate.swift */; };
 		BBDA7C0223939FF20031A8FF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA7C0123939FF20031A8FF /* SceneDelegate.swift */; };
@@ -25,7 +25,6 @@
 		BBDA7C0623939FF60031A8FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBDA7C0523939FF60031A8FF /* Assets.xcassets */; };
 		BBDA7C0923939FF60031A8FF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBDA7C0823939FF60031A8FF /* Preview Assets.xcassets */; };
 		BBDA7C0C23939FF60031A8FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBDA7C0A23939FF60031A8FF /* LaunchScreen.storyboard */; };
-		BBE2A79C2405305F004A7E93 /* MusicPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = BBE2A79B2405305F004A7E93 /* MusicPlayer */; };
 		BBE2A7A3240530C4004A7E93 /* SpotifyiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE2A7A2240530C4004A7E93 /* SpotifyiOS.swift */; };
 		BBE2A7AA2405504A004A7E93 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BBE2A7A92405504A004A7E93 /* SnapKit */; };
 /* End PBXBuildFile section */
@@ -82,6 +81,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB516DB9241793A900E7D29F /* LyricsKit in Frameworks */,
+				BB54C11D243AF92F007A605A /* CXExtensions in Frameworks */,
+				BB54C11F243AF94F007A605A /* MusicPlayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,9 +93,6 @@
 				BBE2A7AA2405504A004A7E93 /* SnapKit in Frameworks */,
 				BB516DBE2417954200E7D29F /* SpotifyiOS.framework in Frameworks */,
 				BB516DB22417930300E7D29F /* LyricsUI.framework in Frameworks */,
-				BB736319240A27AB00845977 /* CXExtensions in Frameworks */,
-				BBE2A79C2405305F004A7E93 /* MusicPlayer in Frameworks */,
-				BB516DBD2417952600E7D29F /* LyricsKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +217,8 @@
 			name = LyricsUI;
 			packageProductDependencies = (
 				BB516DB8241793A900E7D29F /* LyricsKit */,
+				BB54C11C243AF92F007A605A /* CXExtensions */,
+				BB54C11E243AF94F007A605A /* MusicPlayer */,
 			);
 			productName = LyricsUI;
 			productReference = BB516DAB2417930300E7D29F /* LyricsUI.framework */;
@@ -240,10 +240,7 @@
 			);
 			name = "LyricsX-iOS";
 			packageProductDependencies = (
-				BBE2A79B2405305F004A7E93 /* MusicPlayer */,
 				BBE2A7A92405504A004A7E93 /* SnapKit */,
-				BB736318240A27AB00845977 /* CXExtensions */,
-				BB516DBC2417952600E7D29F /* LyricsKit */,
 			);
 			productName = "LyricsX-iOS";
 			productReference = BBDA7BFC23939FF20031A8FF /* LyricsX-iOS.app */;
@@ -656,17 +653,12 @@
 			package = BBDA7C132393A4900031A8FF /* XCRemoteSwiftPackageReference "LyricsKit" */;
 			productName = LyricsKit;
 		};
-		BB516DBC2417952600E7D29F /* LyricsKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BBDA7C132393A4900031A8FF /* XCRemoteSwiftPackageReference "LyricsKit" */;
-			productName = LyricsKit;
-		};
-		BB736318240A27AB00845977 /* CXExtensions */ = {
+		BB54C11C243AF92F007A605A /* CXExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BB736317240A27AB00845977 /* XCRemoteSwiftPackageReference "CXExtensions" */;
 			productName = CXExtensions;
 		};
-		BBE2A79B2405305F004A7E93 /* MusicPlayer */ = {
+		BB54C11E243AF94F007A605A /* MusicPlayer */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BBE2A79A2405305F004A7E93 /* XCRemoteSwiftPackageReference "MusicPlayer" */;
 			productName = MusicPlayer;
