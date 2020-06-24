@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct DefaultArtworkImage: View {
+public struct BackgroundArtworkPlaceholder: View {
     
     public var body: some View {
         ZStack {
@@ -30,8 +30,8 @@ public struct DefaultArtworkImage: View {
     public init() {}
 }
 
-struct DefaultArtworkImage_Previews: PreviewProvider {
+struct BackgroundArtworkPlaceholder_Previews: PreviewProvider {
     static var previews: some View {
-        DefaultArtworkImage()
+        BackgroundArtworkPlaceholder()
     }
 }
