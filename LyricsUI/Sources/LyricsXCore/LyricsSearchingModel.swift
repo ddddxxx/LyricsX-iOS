@@ -87,6 +87,11 @@ public enum LyricsSearchingAction: Equatable {
 }
 
 public struct LyricsSearchingEnvironment {
-    public let mainQueue: DispatchQueue = .main
+    public let mainQueue: DispatchQueue
     public let searchLyrics: (LyricsSearchRequest) -> AnyPublisher<Lyrics, Never>
+    
+    init(mainQueue: DispatchQueue = .main, searchLyrics: @escaping (LyricsSearchRequest) -> AnyPublisher<Lyrics, Never>) {
+        self.mainQueue = mainQueue
+        self.searchLyrics = searchLyrics
+    }
 }

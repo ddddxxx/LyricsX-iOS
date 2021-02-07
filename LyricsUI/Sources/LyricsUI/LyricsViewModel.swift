@@ -24,6 +24,49 @@ public struct LyricsViewState: Equatable {
         self.progressing = progressing
         self.showTranslation = showTranslation
     }
+    
+    public static func reduce(state: inout LyricsViewState, action: LyricsViewAction, env: LyricsViewEnvironment) -> Effect<LyricsViewAction, Never> {
+        struct DelayedSetAutoScrollID: Hashable {}
+        
+        switch action {
+        case let .progressing(action):
+            switch action {
+            case .playbackStateUpdated(_):
+                return Just(LyricsViewAction.setAutoScrollEnabled(true))
+                    .eraseToEffect()
+            default:
+                return .none
+            }
+        
+        case let .lyricsLineTapped(index):
+            // TODO: lyricsLineTapped
+            state.progressing.playbackState = .playing(time: state.progressing.lyrics.lines[index].position)
+            return state.progressing.recalculateCurrentLineIndex(environment: env.progressing)
+                .map(LyricsViewAction.progressing)
+                .cancellable(id: state.progressing.currentLineCalculationCancelID, cancelInFlight: true)
+            
+        case let .setAutoScrollEnabled(enabled):
+            state.isAutoScrollEnabled = enabled
+            if enabled {
+                return .cancel(id: DelayedSetAutoScrollID())
+            } else {
+                return Just(LyricsViewAction.setAutoScrollEnabled(true))
+                    .delay(for: .seconds(5), scheduler: env.progressing.mainQueue)
+                    .eraseToEffect()
+                    .cancellable(id: state.progressing.currentLineCalculationCancelID, cancelInFlight: true)
+            }
+            
+        case .onDrag:
+            state.isAutoScrollEnabled = false
+            return .cancel(id: DelayedSetAutoScrollID())
+            
+        case .onDragEnded:
+            return Just(LyricsViewAction.setAutoScrollEnabled(true))
+                .delay(for: .seconds(5), scheduler: env.progressing.mainQueue)
+                .eraseToEffect()
+                .cancellable(id: state.progressing.currentLineCalculationCancelID, cancelInFlight: true)
+        }
+    }
 }
 
 public enum LyricsViewAction: Equatable {
@@ -39,48 +82,5 @@ public struct LyricsViewEnvironment {
     
     public init(progressing: LyricsProgressingEnvironment) {
         self.progressing = progressing
-    }
-}
-
-public let lyricsViewReducer = Reducer<LyricsViewState, LyricsViewAction, LyricsViewEnvironment> { state, action, env in
-    struct DelayedSetAutoScrollID: Hashable {}
-    
-    switch action {
-    case let .progressing(action):
-        switch action {
-        case .playbackStateUpdated(_):
-            return Just(LyricsViewAction.setAutoScrollEnabled(true))
-                .eraseToEffect()
-        default:
-            return .none
-        }
-    
-    case let .lyricsLineTapped(index):
-        // TODO: lyricsLineTapped
-        state.progressing.playbackState = .playing(time: state.progressing.lyrics.lines[index].position)
-        return state.progressing.recalculateCurrentLineIndex(environment: env.progressing)
-            .map(LyricsViewAction.progressing)
-            .cancellable(id: state.progressing.currentLineCalculationCancelID, cancelInFlight: true)
-        
-    case let .setAutoScrollEnabled(enabled):
-        state.isAutoScrollEnabled = enabled
-        if enabled {
-            return .cancel(id: DelayedSetAutoScrollID())
-        } else {
-            return Just(LyricsViewAction.setAutoScrollEnabled(true))
-                .delay(for: .seconds(5), scheduler: env.progressing.mainQueue)
-                .eraseToEffect()
-                .cancellable(id: state.progressing.currentLineCalculationCancelID, cancelInFlight: true)
-        }
-        
-    case .onDrag:
-        state.isAutoScrollEnabled = false
-        return .cancel(id: DelayedSetAutoScrollID())
-        
-    case .onDragEnded:
-        return Just(LyricsViewAction.setAutoScrollEnabled(true))
-            .delay(for: .seconds(5), scheduler: env.progressing.mainQueue)
-            .eraseToEffect()
-            .cancellable(id: state.progressing.currentLineCalculationCancelID, cancelInFlight: true)
     }
 }

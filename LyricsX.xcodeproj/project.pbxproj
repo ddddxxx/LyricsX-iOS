@@ -15,6 +15,7 @@
 		BB60CBC024A32C2B004CF149 /* CombineExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60CBBE24A32C2B004CF149 /* CombineExtensions.swift */; };
 		BB60CBC124A32C2B004CF149 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60CBBF24A32C2B004CF149 /* Global.swift */; };
 		BB60CBC324A32C36004CF149 /* SpotifyiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60CBC224A32C36004CF149 /* SpotifyiOS.swift */; };
+		BB850EB925CFDC7B00172554 /* NowPlayingItemTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB850EB825CFDC7B00172554 /* NowPlayingItemTitleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		BB60CBBE24A32C2B004CF149 /* CombineExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombineExtensions.swift; sourceTree = "<group>"; };
 		BB60CBBF24A32C2B004CF149 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		BB60CBC224A32C36004CF149 /* SpotifyiOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyiOS.swift; sourceTree = "<group>"; };
+		BB850EB825CFDC7B00172554 /* NowPlayingItemTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingItemTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,11 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				BB60CBBD24A32C2B004CF149 /* Utilities */,
-				BB60CBBB24A32C22004CF149 /* AppController.swift */,
-				BB517E5824A3257B00FDAD03 /* LyricsXApp.swift */,
-				BB60CBB924A32BD2004CF149 /* MainView.swift */,
-				BB60CBC224A32C36004CF149 /* SpotifyiOS.swift */,
-				BB517E5A24A3257C00FDAD03 /* Assets.xcassets */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -84,6 +81,11 @@
 		BB517E6124A3257C00FDAD03 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				BB60CBBB24A32C22004CF149 /* AppController.swift */,
+				BB517E5824A3257B00FDAD03 /* LyricsXApp.swift */,
+				BB850EB625CFD7F600172554 /* Composable */,
+				BB60CBC224A32C36004CF149 /* SpotifyiOS.swift */,
+				BB517E5A24A3257C00FDAD03 /* Assets.xcassets */,
 				BB517E6224A3257C00FDAD03 /* Info.plist */,
 			);
 			path = iOS;
@@ -96,6 +98,15 @@
 				BB60CBBF24A32C2B004CF149 /* Global.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		BB850EB625CFD7F600172554 /* Composable */ = {
+			isa = PBXGroup;
+			children = (
+				BB60CBB924A32BD2004CF149 /* MainView.swift */,
+				BB850EB825CFDC7B00172554 /* NowPlayingItemTitleView.swift */,
+			);
+			path = Composable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB60CBBA24A32BD2004CF149 /* MainView.swift in Sources */,
+				BB850EB925CFDC7B00172554 /* NowPlayingItemTitleView.swift in Sources */,
 				BB517E6B24A3257C00FDAD03 /* LyricsXApp.swift in Sources */,
 				BB60CBC324A32C36004CF149 /* SpotifyiOS.swift in Sources */,
 				BB60CBBC24A32C22004CF149 /* AppController.swift in Sources */,
