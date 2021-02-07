@@ -42,7 +42,7 @@ public struct LyricsProgressingState: Equatable {
         return ObjectIdentifier(lyrics).hashValue
     }
     
-    public static func reduceProgression(state: inout LyricsProgressingState, action: LyricsProgressingAction, env: LyricsProgressingEnvironment) -> Effect<LyricsProgressingAction, Never> {
+    public static func reduce(state: inout LyricsProgressingState, action: LyricsProgressingAction, env: LyricsProgressingEnvironment) -> Effect<LyricsProgressingAction, Never> {
         struct PlaybackStateUpdateID: Hashable {}
         switch action {
         case .startTrackingProgression:
