@@ -2,12 +2,21 @@
   "object": {
     "pins": [
       {
+        "package": "combine-schedulers",
+        "repositoryURL": "https://github.com/pointfreeco/combine-schedulers",
+        "state": {
+          "branch": null,
+          "revision": "8eab6ad841ccc420f29f3e77e17e7b260841b50a",
+          "version": "0.2.0"
+        }
+      },
+      {
         "package": "CombineX",
         "repositoryURL": "https://github.com/cx-org/CombineX",
         "state": {
           "branch": null,
-          "revision": "9ce154b155643ec8939d84cb6ae00c331ff3eca0",
-          "version": "0.2.1"
+          "revision": "96cd76ccddac5d0493ebd91d69f1e6e9ccb58f5f",
+          "version": "0.3.0"
         }
       },
       {
@@ -15,8 +24,8 @@
         "repositoryURL": "https://github.com/cx-org/CXExtensions",
         "state": {
           "branch": null,
-          "revision": "3a777360ef0ec92342a2ed82fe748a78efead181",
-          "version": "0.2.2"
+          "revision": "6843af94bfaedfe90df1435c1a6c83cc3366a62b",
+          "version": "0.3.0"
         }
       },
       {
@@ -32,27 +41,18 @@
         "package": "LyricsKit",
         "repositoryURL": "https://github.com/ddddxxx/LyricsKit",
         "state": {
-          "branch": null,
-          "revision": "8e21b64eb46c27e7e57a516566351a9027bd02e3",
-          "version": "0.8.3"
+          "branch": "master",
+          "revision": "a3f74818efc24e9a5cfb6caf60cdf1a957774070",
+          "version": null
         }
       },
       {
-        "package": "Nimble",
-        "repositoryURL": "https://github.com/Quick/Nimble.git",
+        "package": "MusicPlayer",
+        "repositoryURL": "https://github.com/ddddxxx/MusicPlayer",
         "state": {
           "branch": null,
-          "revision": "f8657642dfdec9973efc79cc68bcef43a653a2bc",
-          "version": "8.0.2"
-        }
-      },
-      {
-        "package": "Quick",
-        "repositoryURL": "https://github.com/Quick/Quick.git",
-        "state": {
-          "branch": null,
-          "revision": "09b3becb37cb2163919a3842a4c5fa6ec7130792",
-          "version": "2.2.1"
+          "revision": "e652b184bc91b003dfc34cce88aaaf20b33fb33a",
+          "version": "0.7.0"
         }
       },
       {
@@ -65,12 +65,30 @@
         }
       },
       {
-        "package": "Semver",
-        "repositoryURL": "https://github.com/ddddxxx/Semver.git",
+        "package": "swift-case-paths",
+        "repositoryURL": "https://github.com/pointfreeco/swift-case-paths",
         "state": {
           "branch": null,
-          "revision": "6094e6f23a02b52b5d211fd114a4750c4f3ecef3",
-          "version": "0.2.1"
+          "revision": "1aa1bf7c4069d9ba2f7edd36dbfc96ff1c58cbff",
+          "version": "0.1.3"
+        }
+      },
+      {
+        "package": "swift-composable-architecture",
+        "repositoryURL": "https://github.com/pointfreeco/swift-composable-architecture",
+        "state": {
+          "branch": null,
+          "revision": "e51fb00d1f4bfacda7d8e4deef0a8c1757192839",
+          "version": "0.13.0"
+        }
+      },
+      {
+        "package": "SwiftCF",
+        "repositoryURL": "https://github.com/ddddxxx/SwiftCF",
+        "state": {
+          "branch": null,
+          "revision": "845455788ed18a7885eca3c00114372d6ba1aa4c",
+          "version": "0.1.6"
         }
       }
     ]

@@ -11,7 +11,8 @@ import SwiftUI
 struct LyricsXApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView(controller: AppController.shared)
+            EmptyView()
+//            MainView()
         }
     }
 }

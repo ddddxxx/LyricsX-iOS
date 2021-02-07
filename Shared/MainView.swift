@@ -5,40 +5,64 @@
 //  Copyright (C) 2020  Xander Deng. Licensed under GPLv3.
 //
 
+import Combine
 import SwiftUI
-import LyricsUI
+import ComposableArchitecture
 import LyricsCore
+import MusicPlayer
+import LyricsUI
+
+struct MainViewState: Equatable {
+    var lyricsView: LyricsViewState?
+}
+
+enum MainViewAction: Equatable {
+    case lyricsView(LyricsViewAction)
+}
+
+struct MainViewEnvironment {
+    let mainQueue = DispatchQueue.main
+    let player: MusicPlayerProtocol
+    
+    var lyricsView: LyricsViewEnvironment {
+        return LyricsViewEnvironment(mainQueue: mainQueue, playbackStateUpdate: player.playbackStateWillChange)
+    }
+}
+
+let mainViewReducer = Reducer<MainViewState, MainViewAction, MainViewEnvironment>.combine(
+    lyricsViewReducer
+        .optional()
+        .pullback(
+            state: \.lyricsView,
+            action: /MainViewAction.lyricsView,
+            environment: \.lyricsView
+        ),
+    Reducer { state, action, env in
+        
+        return .none
+    }
+)
 
 struct MainView: View {
     
-    @ObservedObject var controller: AppController
-    
-    @State var isAutoScrollEnabled: Bool = true
+    var store: Store<MainViewState, MainViewAction>
     
     var body: some View {
-        ZStack {
-            DefaultArtworkImage()
-            LyricsView(lyrics: controller.currentLyrics, isAutoScrollEnabled: $isAutoScrollEnabled)
-                .moveFocus(to: controller.currentLineIndex)
-                .overlay(
-                    HStack {
-                        if !isAutoScrollEnabled {
-                            Button(action: {
-                                self.isAutoScrollEnabled = true
-                            }, label: {
-                                Image("Action.Track")
-                            })
-                        }
-                    }
-                    .accentColor(.white)
-                    .padding(20),
-                    alignment: .bottomLeading)
+        IfLetStore(self.store.scope(state: \.lyricsView, action: MainViewAction.lyricsView)) { store in
+            LyricsView(store: store)
+                .padding()
         }
+        .background(DefaultArtworkImage().dimmed())
+        .ignoresSafeArea()
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(controller: AppController.shared)
+        let player = MusicPlayers.Virtual()
+        player.currentTrack = MusicTrack(id: "0", title: "0", album: "0", artist: "0")
+        player.playbackState = .playing(time: 0)
+        let store = Store(initialState: MainViewState(lyricsView: LyricsViewState(lyrics: .sample, showTranslation: true)), reducer: mainViewReducer, environment: MainViewEnvironment(player: player))
+        return MainView(store: store)
     }
 }

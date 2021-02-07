@@ -1,13 +1,17 @@
 //
-//  DefaultArtworkImage
+//  DefaultArtworkImage.swift
+//  LyricsX - https://github.com/ddddxxx/LyricsX
 //
-//  This file is part of LyricsX - https://github.com/ddddxxx/LyricsX
-//  Copyright (C) 2020  Xander Deng. Licensed under GPLv3.
+//  This Source Code Form is subject to the terms of the Mozilla Public
+//  License, v. 2.0. If a copy of the MPL was not distributed with this
+//  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 
 import SwiftUI
 
-public struct BackgroundArtworkPlaceholder: View {
+public struct DefaultArtworkImage: View {
+    
+    public init() {}
     
     public var body: some View {
         ZStack {
@@ -22,16 +26,25 @@ public struct BackgroundArtworkPlaceholder: View {
                 startPoint: .bottom,
                 endPoint: .top)
                 .blendMode(.difference)
-            Color.init(white: 0, opacity: 0.6)
+            Color.init(white: 0, opacity: 0.2)
         }
-        .aspectRatio(1, contentMode: .fill)
+        .aspectRatio(contentMode: .fill)
     }
     
-    public init() {}
+    public func dimmed() -> some View {
+        return self.overlay(Color.init(white: 0, opacity: 0.5))
+    }
 }
 
-struct BackgroundArtworkPlaceholder_Previews: PreviewProvider {
+struct DefaultArtworkImage_Previews: PreviewProvider {
     static var previews: some View {
-        BackgroundArtworkPlaceholder()
+        Group {
+            DefaultArtworkImage()
+                .previewLayout(.fixed(width: 100, height: 100))
+            
+            DefaultArtworkImage()
+                .dimmed()
+                .previewLayout(.fixed(width: 100, height: 100))
+        }
     }
 }

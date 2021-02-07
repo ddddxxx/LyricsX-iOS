@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB50B1ED25CD6B0E0087FAD5 /* LyricsUI in Frameworks */ = {isa = PBXBuildFile; productRef = BB50B1EC25CD6B0E0087FAD5 /* LyricsUI */; };
 		BB517E6B24A3257C00FDAD03 /* LyricsXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB517E5824A3257B00FDAD03 /* LyricsXApp.swift */; };
 		BB517E6F24A3257C00FDAD03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB517E5A24A3257C00FDAD03 /* Assets.xcassets */; };
 		BB60CBBA24A32BD2004CF149 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60CBB924A32BD2004CF149 /* MainView.swift */; };
@@ -34,12 +35,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB50B1ED25CD6B0E0087FAD5 /* LyricsUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BB50B1EB25CD6B0E0087FAD5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BB517E5224A3257A00FDAD03 = {
 			isa = PBXGroup;
 			children = (
@@ -47,6 +56,7 @@
 				BB517E5724A3257B00FDAD03 /* Shared */,
 				BB517E6124A3257C00FDAD03 /* iOS */,
 				BB517E6024A3257C00FDAD03 /* Products */,
+				BB50B1EB25CD6B0E0087FAD5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,6 +114,9 @@
 			dependencies = (
 			);
 			name = iOS;
+			packageProductDependencies = (
+				BB50B1EC25CD6B0E0087FAD5 /* LyricsUI */,
+			);
 			productName = iOS;
 			productReference = BB517E5F24A3257C00FDAD03 /* LyricsX.app */;
 			productType = "com.apple.product-type.application";
@@ -346,6 +359,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BB50B1EC25CD6B0E0087FAD5 /* LyricsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LyricsUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BB517E5324A3257A00FDAD03 /* Project object */;
 }

@@ -5,8 +5,8 @@ import PackageDescription
 let package = Package(
     name: "LyricsUI",
     platforms: [
-        .macOS(.v10_10),
-        .iOS(.v9),
+        .macOS(.v11),
+        .iOS(.v14),
     ],
     products: [
         .library(
@@ -14,14 +14,22 @@ let package = Package(
             targets: ["LyricsUI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ddddxxx/LyricsKit", from: "0.8.3"),
+        .package(url: "https://github.com/ddddxxx/LyricsKit", .branch("master")),
+        .package(url: "https://github.com/ddddxxx/MusicPlayer", .upToNextMinor(from: "0.7.0")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMinor(from: "0.13.0")),
     ],
     targets: [
         .target(
             name: "LyricsUI",
-            dependencies: ["LyricsKit"]),
+            dependencies: [
+                "LyricsKit",
+                "MusicPlayer",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]),
     ]
 )
+
+/*
 
 enum CombineImplementation {
     
@@ -60,3 +68,5 @@ import Foundation
 if ProcessInfo.processInfo.combineImplementation == .combine {
     package.platforms = [.macOS(.v10_15), .iOS(.v13)]
 }
+ 
+ */

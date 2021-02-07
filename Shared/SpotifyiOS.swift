@@ -5,6 +5,8 @@
 //  Copyright (C) 2020  Xander Deng. Licensed under GPLv3.
 //
 
+#if false
+
 import Foundation
 import CXShim
 import MusicPlayer
@@ -238,5 +240,7 @@ extension SPTAppRemotePlaybackOptionsRepeatMode {
         }
     }
 }
+
+#endif
 
 #endif

@@ -15,7 +15,7 @@ class AppController: ObservableObject {
     
     static let shared = AppController()
     
-    let lyricsManager = LyricsProviderManager()
+    let lyricsManager = LyricsProviders.Group(service: LyricsProviders.Service.allCases)
     let musicPlayer = MusicPlayers.AppleMusic()
     
     @Published var currentLyrics: Lyrics? {
