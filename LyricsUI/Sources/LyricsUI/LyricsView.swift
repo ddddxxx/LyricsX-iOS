@@ -10,6 +10,7 @@
 import Combine
 import SwiftUI
 import ComposableArchitecture
+import LyricsXCore
 import LyricsCore
 import MusicPlayer
 
@@ -27,9 +28,9 @@ public struct LyricsView: View {
             ScrollViewReader { scrollProxy in
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 8) {
-                        ForEach(viewStore.lyrics.lines.indices, id: \.self) { index in
-                            LyricsLineView(line: viewStore.lyrics.lines[index], showTranslation: viewStore.showTranslation)
-                                .foregroundColor(viewStore.currentLineIndex == index ? Color(.systemBlue) : .primary)
+                        ForEach(viewStore.progressing.lyrics.lines.indices, id: \.self) { index in
+                            LyricsLineView(line: viewStore.progressing.lyrics.lines[index], showTranslation: viewStore.showTranslation)
+                                .foregroundColor(viewStore.progressing.currentLineIndex == index ? Color(.systemBlue) : .primary)
                                 .onTapGesture {
                                     viewStore.send(.lyricsLineTapped(index: index))
                                 }
@@ -37,7 +38,7 @@ public struct LyricsView: View {
                     }
                     .padding(.vertical, geometry.size.height / 2)
                 }
-                .onChange(of: viewStore.currentLineIndex) { index in
+                .onChange(of: viewStore.progressing.currentLineIndex) { index in
                     if let index = index, viewStore.isAutoScrollEnabled {
                         withAnimation(.linear(duration: 0.1)) {
                             scrollProxy.scrollTo(index, anchor: .center)
@@ -54,8 +55,6 @@ public struct LyricsView: View {
                         }
                 )
             }
-        }.onAppear {
-            viewStore.send(.recalculateCurrentLineIndex)
         }
     }
 }
@@ -63,30 +62,23 @@ public struct LyricsView: View {
 struct LyricsView_Previews: PreviewProvider {
     
     static var previews: some View {
-        Group {
-            LyricsView(
-                store: Store(
-                    initialState: LyricsViewState(lyrics: .sample, showTranslation: true),
-                    reducer: lyricsViewReducer,
-                    environment: LyricsViewEnvironment(playbackStateUpdate: Just(PlaybackState.playing(time: 0)).eraseToAnyPublisher())
-                )
-            )
-            .padding()
-            .background(Color.systemBackground)
-            .environment(\.colorScheme, .light)
-            .edgesIgnoringSafeArea(.all)
+        let store = Store(
+            initialState: LyricsViewState(progressing: LyricsProgressingState(lyrics: .sample, playbackState: .stopped), showTranslation: true),
+            reducer: lyricsViewReducer,
+            environment: LyricsViewEnvironment(progressing: LyricsProgressingEnvironment(playbackStateUpdate: Just(PlaybackState.playing(time: 0)).eraseToAnyPublisher()))
+        )
+        return Group {
+            LyricsView(store: store)
+                .padding()
+                .background(Color.systemBackground)
+                .environment(\.colorScheme, .light)
+                .edgesIgnoringSafeArea(.all)
             
-            LyricsView(
-                store: Store(
-                    initialState: LyricsViewState(lyrics: .sample, showTranslation: true),
-                    reducer: lyricsViewReducer,
-                    environment: LyricsViewEnvironment(playbackStateUpdate: Just(PlaybackState.playing(time: 0)).eraseToAnyPublisher())
-                )
-            )
-            .padding()
-            .background(Color.systemBackground)
-            .environment(\.colorScheme, .dark)
-            .edgesIgnoringSafeArea(.all)
+            LyricsView(store: store)
+                .padding()
+                .background(Color.systemBackground)
+                .environment(\.colorScheme, .dark)
+                .edgesIgnoringSafeArea(.all)
         }
     }
 }

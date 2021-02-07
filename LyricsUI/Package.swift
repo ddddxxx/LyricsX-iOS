@@ -20,11 +20,16 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "LyricsUI",
+            name: "LyricsXCore",
             dependencies: [
                 "LyricsKit",
                 "MusicPlayer",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]),
+        .target(
+            name: "LyricsUI",
+            dependencies: [
+                "LyricsXCore",
             ]),
     ]
 )
