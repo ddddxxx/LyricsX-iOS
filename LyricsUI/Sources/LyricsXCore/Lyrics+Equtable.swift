@@ -10,10 +10,13 @@
 import LyricsCore
 
 // TODO: move to LyricsKit
-extension Lyrics: Equatable {
+extension Lyrics: Equatable, Hashable {
+    
     public static func == (lhs: Lyrics, rhs: Lyrics) -> Bool {
-        return lhs.idTags == rhs.idTags &&
-//            lhs.metadata == rhs.metadata &&
-            lhs.lines == rhs.lines
+        return lhs === rhs
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
     }
 }

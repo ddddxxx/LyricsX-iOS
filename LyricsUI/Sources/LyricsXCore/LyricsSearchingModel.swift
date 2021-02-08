@@ -31,7 +31,7 @@ public struct LyricsSearchingState: Equatable {
             duration: track.duration ?? 0)
     }
     
-    private mutating func clearPreviousSearching() {
+    private mutating func clearPreviousSearch() {
         searchResultSorted = []
         currentLyrics = nil
         searchTerm = nil
@@ -40,7 +40,7 @@ public struct LyricsSearchingState: Equatable {
     public static func reduce(state: inout LyricsSearchingState, action: LyricsSearchingAction, env: LyricsSearchingEnvironment) -> Effect<LyricsSearchingAction, Never> {
         switch action {
         case .autoSearch:
-            state.clearPreviousSearching()
+            state.clearPreviousSearch()
             guard let title = state.track.title, let artist = state.track.artist else {
                 state.searchTerm = nil
                 return .none
@@ -53,7 +53,7 @@ public struct LyricsSearchingState: Equatable {
                 .cancellable(id: state.track, cancelInFlight: true)
             
         case let .search(term: term):
-            state.clearPreviousSearching()
+            state.clearPreviousSearch()
             let req = state.setSearchTerm(term)
             return env.searchLyrics(req)
                 .map { LyricsSearchingAction.lyricsReceived($0, isAuto: false) }
@@ -61,18 +61,22 @@ public struct LyricsSearchingState: Equatable {
                 .eraseToEffect()
                 .cancellable(id: state.track, cancelInFlight: true)
             
+        case .clearPreviousSearch:
+            state.clearPreviousSearch()
+            return .cancel(id: state.track)
+            
         case let .lyricsReceived(lyrics, isAuto):
             let idx = state.searchResultSorted.lastIndex { $0.quality < lyrics.quality } ?? state.searchResultSorted.endIndex
             defer {
                 state.searchResultSorted.insert(lyrics, at: idx)
             }
             if isAuto, idx == state.searchResultSorted.startIndex {
-                return Just(LyricsSearchingAction.chooseLyrics(lyrics))
+                return Just(LyricsSearchingAction.setCurrentLyrics(lyrics))
                     .eraseToEffect()
             }
             return .none
             
-        case let .chooseLyrics(lyrics):
+        case let .setCurrentLyrics(lyrics):
             state.currentLyrics = lyrics
             return .none
         }
@@ -82,15 +86,16 @@ public struct LyricsSearchingState: Equatable {
 public enum LyricsSearchingAction: Equatable {
     case autoSearch
     case search(term: LyricsSearchRequest.SearchTerm)
+    case clearPreviousSearch
     case lyricsReceived(Lyrics, isAuto: Bool)
-    case chooseLyrics(Lyrics)
+    case setCurrentLyrics(Lyrics)
 }
 
 public struct LyricsSearchingEnvironment {
     public let mainQueue: DispatchQueue
     public let searchLyrics: (LyricsSearchRequest) -> AnyPublisher<Lyrics, Never>
     
-    init(mainQueue: DispatchQueue = .main, searchLyrics: @escaping (LyricsSearchRequest) -> AnyPublisher<Lyrics, Never>) {
+    public init(mainQueue: DispatchQueue = .main, searchLyrics: @escaping (LyricsSearchRequest) -> AnyPublisher<Lyrics, Never>) {
         self.mainQueue = mainQueue
         self.searchLyrics = searchLyrics
     }

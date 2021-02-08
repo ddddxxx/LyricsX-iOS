@@ -18,8 +18,9 @@ public struct LyricsViewState: Equatable {
     public var progressing: LyricsProgressingState
     
     public var isAutoScrollEnabled: Bool = true
+    public var forceScroll = false
     
-    public init(progressing: LyricsProgressingState, showTranslation: Bool) {
+    public init(progressing: LyricsProgressingState) {
         self.progressing = progressing
     }
     
@@ -54,6 +55,10 @@ public struct LyricsViewState: Equatable {
                     .cancellable(id: state.progressing.currentLineCalculationCancelID, cancelInFlight: true)
             }
             
+        case let .setForceScroll(forceScroll):
+            state.forceScroll = forceScroll
+            return .none
+            
         case .onDrag:
             state.isAutoScrollEnabled = false
             return .cancel(id: DelayedSetAutoScrollID())
@@ -71,6 +76,7 @@ public enum LyricsViewAction: Equatable {
     case progressing(LyricsProgressingAction)
     case lyricsLineTapped(index: Int)
     case setAutoScrollEnabled(Bool)
+    case setForceScroll(Bool)
     case onDrag
     case onDragEnded
 }

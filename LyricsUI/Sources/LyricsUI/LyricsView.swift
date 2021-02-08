@@ -48,6 +48,13 @@ public struct LyricsView: View {
                         }
                     }
                 }
+                .onChange(of: viewStore.forceScroll) { forceScroll in
+                    guard forceScroll else { return }
+                    if let index = viewStore.progressing.currentLineIndex {
+                        scrollProxy.scrollTo(index, anchor: .center)
+                    }
+                    viewStore.send(.setForceScroll(false))
+                }
                 .gesture(
                     DragGesture()
                         .onChanged { _ in
@@ -66,7 +73,7 @@ struct LyricsView_Previews: PreviewProvider {
     
     static var previews: some View {
         let store = Store(
-            initialState: LyricsViewState(progressing: LyricsProgressingState(lyrics: .sample, playbackState: .stopped), showTranslation: true),
+            initialState: LyricsViewState(progressing: LyricsProgressingState(lyrics: .sample, playbackState: .stopped)),
             reducer: Reducer(LyricsViewState.reduce),
             environment: LyricsViewEnvironment(progressing: LyricsProgressingEnvironment(playbackStateUpdate: Just(PlaybackState.playing(time: 0)).eraseToAnyPublisher()))
         )

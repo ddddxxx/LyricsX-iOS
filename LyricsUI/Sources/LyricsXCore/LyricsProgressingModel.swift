@@ -18,10 +18,16 @@ public struct LyricsProgressingState: Equatable {
     public var playbackState: PlaybackState = .stopped
     
     public var currentLineIndex: Int? = nil
+    public var lyricsOffset: Int {
+        didSet {
+            lyrics.offset = lyricsOffset
+        }
+    }
     
     public init(lyrics: Lyrics, playbackState: PlaybackState) {
         self.lyrics = lyrics
         self.playbackState = playbackState
+        self.lyricsOffset = lyrics.offset
     }
     
     public mutating func recalculateCurrentLineIndex(environment: LyricsProgressingEnvironment) -> Effect<LyricsProgressingAction, Never> {
@@ -65,7 +71,7 @@ public struct LyricsProgressingState: Equatable {
                 .cancellable(id: state.currentLineCalculationCancelID, cancelInFlight: true)
             
         case let .setLyricsOffset(offset):
-            state.lyrics.offset = offset
+            state.lyricsOffset = offset
             return state.recalculateCurrentLineIndex(environment: env)
                 .cancellable(id: state.currentLineCalculationCancelID, cancelInFlight: true)
         }
