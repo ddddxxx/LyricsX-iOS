@@ -17,10 +17,13 @@ import MusicPlayer
 public struct LyricsView: View {
     
     @ObservedObject
-    var viewStore: ViewStore<LyricsViewState, LyricsViewAction>
+    public var viewStore: ViewStore<LyricsViewState, LyricsViewAction>
     
-    public init(store: Store<LyricsViewState, LyricsViewAction>) {
+    public var showTranslation: Bool
+    
+    public init(store: Store<LyricsViewState, LyricsViewAction>, showTranslation: Bool) {
         self.viewStore = ViewStore(store)
+        self.showTranslation = showTranslation
     }
     
     public var body: some View {
@@ -29,7 +32,7 @@ public struct LyricsView: View {
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 8) {
                         ForEach(viewStore.progressing.lyrics.lines.indices, id: \.self) { index in
-                            LyricsLineView(line: viewStore.progressing.lyrics.lines[index], showTranslation: viewStore.showTranslation)
+                            LyricsLineView(line: viewStore.progressing.lyrics.lines[index], showTranslation: showTranslation)
                                 .foregroundColor(viewStore.progressing.currentLineIndex == index ? Color(.systemBlue) : .primary)
                                 .onTapGesture {
                                     viewStore.send(.lyricsLineTapped(index: index))
@@ -68,13 +71,13 @@ struct LyricsView_Previews: PreviewProvider {
             environment: LyricsViewEnvironment(progressing: LyricsProgressingEnvironment(playbackStateUpdate: Just(PlaybackState.playing(time: 0)).eraseToAnyPublisher()))
         )
         return Group {
-            LyricsView(store: store)
+            LyricsView(store: store, showTranslation: true)
                 .padding()
                 .background(Color.systemBackground)
                 .environment(\.colorScheme, .light)
                 .edgesIgnoringSafeArea(.all)
             
-            LyricsView(store: store)
+            LyricsView(store: store, showTranslation: true)
                 .padding()
                 .background(Color.systemBackground)
                 .environment(\.colorScheme, .dark)

@@ -41,10 +41,13 @@ struct MainView: View {
     
     var store: Store<MainViewState, MainViewAction>
     
+    @AppStorage("ShowTranslation")
+    var showTranslation: Bool = false
+    
     var body: some View {
         NavigationView {
             IfLetStore(self.store.scope(state: \.lyricsView, action: MainViewAction.lyricsView)) { store in
-                LyricsView(store: store)
+                LyricsView(store: store, showTranslation: showTranslation)
                     .padding()
             }
             .background(DefaultArtworkImage().dimmed().ignoresSafeArea())

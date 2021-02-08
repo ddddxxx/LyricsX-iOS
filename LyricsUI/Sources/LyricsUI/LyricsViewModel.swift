@@ -17,12 +17,10 @@ public struct LyricsViewState: Equatable {
     
     public var progressing: LyricsProgressingState
     
-    public var showTranslation: Bool
     public var isAutoScrollEnabled: Bool = true
     
     public init(progressing: LyricsProgressingState, showTranslation: Bool) {
         self.progressing = progressing
-        self.showTranslation = showTranslation
     }
     
     public static func reduce(state: inout LyricsViewState, action: LyricsViewAction, env: LyricsViewEnvironment) -> Effect<LyricsViewAction, Never> {
