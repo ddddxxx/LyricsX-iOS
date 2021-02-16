@@ -45,7 +45,7 @@ public struct LyricsProgressingState: Equatable {
         }
     }
     
-    public var currentLineCalculationCancelID: Int {
+    private var currentLineCalculationCancelID: Int {
         return ObjectIdentifier(lyrics).hashValue
     }
     

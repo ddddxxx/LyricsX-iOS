@@ -16,57 +16,81 @@ import MusicPlayer
 
 public struct LyricsView: View {
     
-    @ObservedObject
-    public var viewStore: ViewStore<LyricsViewState, LyricsViewAction>
+    public enum AutoScrollState {
+        case focusing
+        case awaiting
+        case none
+    }
+    
+    @EnvironmentObject
+    public var coreStore: ViewStore<LyricsXCoreState, LyricsXCoreAction>
+    
+    @State
+    public var autoScrollState: AutoScrollState = .focusing
     
     public var showTranslation: Bool
     
-    public init(store: Store<LyricsViewState, LyricsViewAction>, showTranslation: Bool) {
-        self.viewStore = ViewStore(store)
+    public init(showTranslation: Bool) {
         self.showTranslation = showTranslation
     }
     
     public var body: some View {
-        GeometryReader { geometry in
-            ScrollViewReader { scrollProxy in
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 8) {
-                        ForEach(viewStore.progressing.lyrics.lines.indices, id: \.self) { index in
-                            LyricsLineView(line: viewStore.progressing.lyrics.lines[index], showTranslation: showTranslation)
-                                .opacity(viewStore.progressing.currentLineIndex == index ? 1 : 0.6)
-                                .scaleEffect(viewStore.progressing.currentLineIndex == index ? 1 : 0.9, anchor: .leading)
-                                .animation(.default, value: viewStore.progressing.currentLineIndex == index)
-                                .onTapGesture {
-                                    viewStore.send(.lyricsLineTapped(index: index))
+        if let progressing = coreStore.progressingState {
+            GeometryReader { geometry in
+                ScrollViewReader { scrollProxy in
+                    ScrollView {
+                        LazyVStack(alignment: .leading, spacing: 8) {
+                            ForEach(progressing.lyrics.lines.indices, id: \.self) { index in
+                                LyricsLineView(line: progressing.lyrics.lines[index], showTranslation: showTranslation)
+                                    .opacity(progressing.currentLineIndex == index ? 1 : 0.6)
+                                    .scaleEffect(progressing.currentLineIndex == index ? 1 : 0.9, anchor: .topLeading)
+                                    .animation(.default, value: progressing.currentLineIndex == index)
+                                // TODO:
+                                if progressing.currentLineIndex == index {
+                                    Spacer(minLength: 4)
                                 }
+                            }
+                        }
+                        .padding(.vertical, geometry.size.height / 2)
+                    }
+                    .gesture(
+                        DragGesture()
+                            .onChanged { _ in
+                                autoScrollState = .none
+                            }
+                            .onEnded { _ in
+                                autoScrollState = .awaiting
+                            }
+                    )
+                    .onChange(of: progressing.currentLineIndex) { _ in
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            self.autoScrollIfNeeded(scrollProxy: scrollProxy)
                         }
                     }
-                    .padding(.vertical, geometry.size.height / 2)
-                }
-                .onChange(of: viewStore.progressing.currentLineIndex) { index in
-                    if let index = index, viewStore.isAutoScrollEnabled {
-                        withAnimation(.linear(duration: 0.1)) {
-                            scrollProxy.scrollTo(index, anchor: .center)
+                    .onChange(of: autoScrollState) { _ in
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            self.autoScrollIfNeeded(scrollProxy: scrollProxy)
                         }
                     }
                 }
-                .onChange(of: viewStore.forceScroll) { forceScroll in
-                    guard forceScroll else { return }
-                    if let index = viewStore.progressing.currentLineIndex {
-                        scrollProxy.scrollTo(index, anchor: .center)
-                    }
-                    viewStore.send(.setForceScroll(false))
-                }
-                .gesture(
-                    DragGesture()
-                        .onChanged { _ in
-                            viewStore.send(.onDrag)
-                        }
-                        .onEnded { _ in
-                            viewStore.send(.onDragEnded)
-                        }
-                )
             }
+            .onAppear {
+                coreStore.send(.progressingAction(.recalculateCurrentLineIndex))
+            }
+        }
+        
+    }
+    
+    private func autoScrollIfNeeded(scrollProxy: ScrollViewProxy) {
+        switch autoScrollState {
+        case .focusing:
+            if let index = coreStore.progressingState?.currentLineIndex {
+                scrollProxy.scrollTo(index, anchor: .center)
+            }
+        case .awaiting:
+            autoScrollState = .focusing
+        case .none:
+            break
         }
     }
 }
@@ -76,21 +100,25 @@ import LyricsUIPreviewSupport
 struct LyricsView_Previews: PreviewProvider {
     
     static var previews: some View {
-        let progressing = LyricsProgressingState(
-            lyrics: PreviewResources.lyrics,
-            playbackState: .playing(time: 3))
         let store = Store(
-            initialState: LyricsViewState(progressing: progressing),
-            reducer: Reducer(LyricsViewState.reduce),
-            environment: .default
-        )
+            initialState: PreviewResources.coreState,
+            reducer: Reducer(LyricsProgressingState.reduce)
+                .optional()
+                .pullback(
+                    state: \LyricsXCoreState.progressingState,
+                    action: /LyricsXCoreAction.progressingAction,
+                    environment: { $0 }),
+            environment: .default)
+        let viewStore = ViewStore(store)
         return Group {
-            LyricsView(store: store, showTranslation: true)
+            LyricsView(showTranslation: true)
+                .environmentObject(viewStore)
                 .padding()
                 .background(Color.systemBackground)
                 .environment(\.colorScheme, .light)
             
-            LyricsView(store: store, showTranslation: true)
+            LyricsView(showTranslation: true)
+                .environmentObject(viewStore)
                 .padding()
                 .background(Color.systemBackground)
                 .environment(\.colorScheme, .dark)

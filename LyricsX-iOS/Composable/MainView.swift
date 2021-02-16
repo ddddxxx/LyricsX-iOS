@@ -18,18 +18,19 @@ struct MainViewState: Equatable {
     
     var coreState: LyricsXCoreState
     
-    var lyricsView: LyricsViewState? {
-        get { return coreState.progressingState.map(LyricsViewState.init(progressing:)) }
-        set { coreState.progressingState = newValue?.progressing }
+    var nowPlayingLyricsView: NowPlayingLyricsViewState {
+        get {
+            return NowPlayingLyricsViewState(playerState: coreState.playerState, progressingState: coreState.progressingState)
+        }
+        set {
+            coreState.playerState = newValue.playerState
+            coreState.progressingState = newValue.progressingState
+        }
     }
     
     var searchView: LyricsSearchViewState? {
         get { coreState.searchingState.map(LyricsSearchViewState.init) }
         set { coreState.searchingState = newValue?.searching }
-    }
-    
-    static func reduce(state: inout MainViewState, action: MainViewAction, env: MainViewEnvironment) -> Effect<MainViewAction, Never> {
-        return .none
     }
 }
 
@@ -41,10 +42,21 @@ enum MainViewAction: Equatable {
     
     static func searchViewAction(_ action: LyricsSearchViewAction) -> MainViewAction {
         switch action {
-        case let .left(isolated):
-            return .searchViewIsolatedAction(isolated)
-        case let .right(searching):
-            return .coreAction(.searchingAction(searching))
+        case let .left(a):
+            return .searchViewIsolatedAction(a)
+        case let .right(a):
+            return .coreAction(.searchingAction(a))
+        }
+    }
+    
+    static func nowPlayingLyricsViewAction(_ action: NowPlayingLyricsViewAction) -> MainViewAction {
+        switch action {
+        case let .lyricsViewAction(a):
+            return .lyricsViewAction(a)
+        case let .playerAction(a):
+            return .coreAction(.playerAction(a))
+        case let .progressingAction(a):
+            return .coreAction(.progressingAction(a))
         }
     }
 }
@@ -55,53 +67,30 @@ struct MainView: View {
     
     var store: Store<MainViewState, MainViewAction>
     
-    @AppStorage("ShowLyricsTranslation")
-    var showTranslation = false
-    
     @State
     var isSearchViewPresented = false
     
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
-                IfLetStore(self.store.scope(state: \.lyricsView, action: MainViewAction.lyricsViewAction)) { store in
-                    VStack {
-                        LyricsView(store: store, showTranslation: showTranslation)
-                            .mask(FeatherEdgeMask(edges: .vertical, depthPercentage: 0.05))
-                        HStack {
+                NowPlayingLyricsView(store: store.scope(state: \.nowPlayingLyricsView, action: MainViewAction.nowPlayingLyricsViewAction))
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        NowPlayingToolbarItem(track: viewStore.coreState.playerState.currentTrack)
+                        ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
-                                showTranslation.toggle()
-                                viewStore.send(.lyricsViewAction(.setForceScroll(true)))
+                                isSearchViewPresented.toggle()
                             } label: {
-                                // TODO: icon
-                                Image(systemName: "textformat")
-                                    .font(Font.system(.title2))
+                                Image(systemName: "magnifyingglass")
                             }
-                            Spacer()
-                        }
-                        .foregroundColor(.white)
-                        .padding()
-                    }
-                    .padding()
-                }
-                .background(DefaultArtworkImage().dimmed().ignoresSafeArea())
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    NowPlayingToolbarItem(track: viewStore.coreState.playerState.currentTrack)
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            isSearchViewPresented.toggle()
-                        } label: {
-                            Image(systemName: "magnifyingglass")
                         }
                     }
-                }
-                .environment(\.colorScheme, .dark)
-                .sheet(isPresented: $isSearchViewPresented) {
-                    IfLetStore(store.scope(state: \.searchView, action: MainViewAction.searchViewAction)) { store in
-                        LyricsSearchView(store: store)
+                    .environment(\.colorScheme, .dark)
+                    .sheet(isPresented: $isSearchViewPresented) {
+                        IfLetStore(store.scope(state: \.searchView, action: MainViewAction.searchViewAction)) { store in
+                            LyricsSearchView(store: store)
+                        }
                     }
-                }
             }
         }
     }

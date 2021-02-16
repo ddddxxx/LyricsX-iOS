@@ -10,6 +10,7 @@
 import Foundation
 import LyricsCore
 import MusicPlayer
+import LyricsXCore
 
 public enum PreviewResources {}
 
@@ -34,6 +35,16 @@ public extension PreviewResources {
             album: "1000 Forms of Fear (Deluxe Version)",
             artist: "Sia",
             duration: 216.12)
+    }
+    
+    static var coreState: LyricsXCoreState {
+        let playbackState = PlaybackState.playing(time: 2)
+        let player = MusicPlayerState(player: MusicPlayers.Virtual(track: track, state: playbackState))
+        var searching = LyricsSearchingState(track: track)
+        searching.currentLyrics = lyrics
+        searching.searchResultSorted = [lyrics]
+        let progressing = LyricsProgressingState(lyrics: lyrics, playbackState: playbackState)
+        return LyricsXCoreState(playerState: player, searchingState: searching, progressingState: progressing)
     }
 }
 

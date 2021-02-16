@@ -13,6 +13,7 @@
 		BB60CBC324A32C36004CF149 /* SpotifyiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60CBC224A32C36004CF149 /* SpotifyiOS.swift */; };
 		BB64F5D525D2875200555F84 /* LyricsXCore in Frameworks */ = {isa = PBXBuildFile; productRef = BB64F5D425D2875200555F84 /* LyricsXCore */; };
 		BB64F5DC25D2905700555F84 /* View+ResignKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB64F5DB25D2905700555F84 /* View+ResignKeyboard.swift */; };
+		BB64F5E125D292DB00555F84 /* NowPlayingLyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB64F5E025D292DB00555F84 /* NowPlayingLyricsView.swift */; };
 		BB850EB925CFDC7B00172554 /* NowPlayingToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB850EB825CFDC7B00172554 /* NowPlayingToolbarItem.swift */; };
 		BBC7703225D196C600FD5E66 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7703125D196C600FD5E66 /* Either.swift */; };
 		BBEF4BC525D1002A008856DF /* FeatherEdgeMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF4BC425D1002A008856DF /* FeatherEdgeMask.swift */; };
@@ -29,6 +30,7 @@
 		BB60CBB924A32BD2004CF149 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		BB60CBC224A32C36004CF149 /* SpotifyiOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyiOS.swift; sourceTree = "<group>"; };
 		BB64F5DB25D2905700555F84 /* View+ResignKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ResignKeyboard.swift"; sourceTree = "<group>"; };
+		BB64F5E025D292DB00555F84 /* NowPlayingLyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingLyricsView.swift; sourceTree = "<group>"; };
 		BB850EB825CFDC7B00172554 /* NowPlayingToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingToolbarItem.swift; sourceTree = "<group>"; };
 		BBC7703125D196C600FD5E66 /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		BBEF4BC425D1002A008856DF /* FeatherEdgeMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatherEdgeMask.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				BB60CBB924A32BD2004CF149 /* MainView.swift */,
+				BB64F5E025D292DB00555F84 /* NowPlayingLyricsView.swift */,
 				BBEF4BCC25D11933008856DF /* LyricsSearchView.swift */,
 				BBEF4BC425D1002A008856DF /* FeatherEdgeMask.swift */,
 				BB850EB825CFDC7B00172554 /* NowPlayingToolbarItem.swift */,
@@ -198,6 +201,7 @@
 				BB850EB925CFDC7B00172554 /* NowPlayingToolbarItem.swift in Sources */,
 				BB517E6B24A3257C00FDAD03 /* LyricsXApp.swift in Sources */,
 				BB60CBC324A32C36004CF149 /* SpotifyiOS.swift in Sources */,
+				BB64F5E125D292DB00555F84 /* NowPlayingLyricsView.swift in Sources */,
 				BBEF4BCA25D11824008856DF /* LyricsXAppCore.swift in Sources */,
 				BBC7703225D196C600FD5E66 /* Either.swift in Sources */,
 				BBEF4BCD25D11933008856DF /* LyricsSearchView.swift in Sources */,

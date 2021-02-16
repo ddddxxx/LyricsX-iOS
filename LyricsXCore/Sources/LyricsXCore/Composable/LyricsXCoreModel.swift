@@ -23,6 +23,8 @@ public struct LyricsXCoreState: Equatable {
     }
     
     public static func reduce(state: inout LyricsXCoreState, action: LyricsXCoreAction, env: LyricsXCoreEnvironment) -> Effect<LyricsXCoreAction, Never> {
+        struct UpdatePlaybackStateID: Hashable{}
+        
         switch action {
         case .onAppActivate:
             var actions = [LyricsXCoreAction.playerAction(.startSyncPlayerState), .playerAction(.forceUpdatePlayerState)]
@@ -34,11 +36,15 @@ public struct LyricsXCoreState: Equatable {
         case .playerAction(.currentTrackDidChange):
             state.searchingState = state.playerState.currentTrack.map(LyricsSearchingState.init(track:))
             state.progressingState = nil
-            return Effect(value: LyricsXCoreAction.searchingAction(.autoSearch))
+            return Effect.merge([
+                .cancel(id: UpdatePlaybackStateID()),
+                Effect(value: LyricsXCoreAction.searchingAction(.autoSearch)),
+            ])
             
         case .playerAction(.playbackStateDidChange):
             guard state.progressingState != nil else { return .none }
             return Effect(value: LyricsXCoreAction.progressingAction(.playbackStateUpdated(state.playerState.playbackState)))
+                .cancellable(id: UpdatePlaybackStateID())
             
         case let .searchingAction(.setCurrentLyrics(lyrics)):
             state.progressingState = LyricsProgressingState(lyrics: lyrics, playbackState: state.playerState.playbackState)

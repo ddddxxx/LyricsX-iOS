@@ -35,8 +35,7 @@ let package = Package(
         .target(
             name: "LyricsUIPreviewSupport",
             dependencies: [
-                "LyricsKit",
-                "MusicPlayer",
+                "LyricsXCore",
             ] /* ,
             resources: [
                 .copy("Resources")
