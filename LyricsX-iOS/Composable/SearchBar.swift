@@ -41,10 +41,8 @@ struct SearchBar: View {
                 }).foregroundColor(.primary)
                 
                 if !searchText.isEmpty {
-                    Button {
+                    Button(systemSymbol: .xmarkCircleFill) {
                         searchText = ""
-                    } label: {
-                        SFSymbol.xmarkCircleFill
                     }
                 }
             }

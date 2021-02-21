@@ -33,17 +33,13 @@ struct NowPlayingLyricsView: View {
                     .mask(FeatherEdgeMask(edges: .vertical, depthPercentage: 0.05))
                 
                 HStack {
-                    Button {
+                    Button(systemSymbol: .textformat) {
                         showTranslation.toggle()
-                    } label: {
-                        SFSymbol.textformat
                     }
                     
                     if !isAutoScrollEnabled {
-                        Button {
+                        Button(systemSymbol: .rectangleArrowtriangle2Inward) {
                             isAutoScrollEnabled = true
-                        } label: {
-                            SFSymbol.rectangleArrowtriangle2Inward
                         }
                     }
                     

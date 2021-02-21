@@ -11,13 +11,17 @@ import SwiftUI
 import SFSafeSymbols
 
 extension SFSymbol: View {
+    
     public var body: some View {
         Image(systemName: rawValue)
     }
 }
 
-struct SFSymbol_Previews: PreviewProvider {
-    static var previews: some View {
-        SFSymbol.applelogo
+extension Button where Label == SFSymbol {
+    
+    init(systemSymbol: SFSymbol, action: @escaping () -> Void) {
+        self.init(action: action) {
+            systemSymbol
+        }
     }
 }
