@@ -15,33 +15,29 @@ import MusicPlayer
 @main
 struct LyricsXApp: App {
     
-    let mainStore: Store<MainViewState, MainViewAction> = {
+    let coreStore: ViewStore<LyricsXCoreState, LyricsXCoreAction> = {
         let playerState = MusicPlayerState(player: MusicPlayers.AppleMusic())
-        let mainState = MainViewState(coreState: LyricsXCoreState(playerState: playerState))
-        let reducer = lyricsXCoreReducer.pullback(
-            state: \MainViewState.coreState,
-            action: /MainViewAction.coreAction,
-            environment: { $0 })
-        return Store(initialState: mainState, reducer: reducer, environment: .default)
+        let coreState = LyricsXCoreState(playerState: playerState)
+        let store = Store(initialState: coreState, reducer: lyricsXCoreReducer, environment: .default)
+        return ViewStore(store)
     }()
     
     @Environment(\.scenePhase)
     var scenePhase
     
     var body: some Scene {
-        WithViewStore(mainStore) { viewStore in
-            WindowGroup {
-                MainView(store: mainStore)
-            }
-            .onChange(of: scenePhase) { phase in
-                switch phase {
-                case .active:
-                    // TODO: Authorization
-                    MusicPlayers.AppleMusic().requestAuthorizationIfNeeded()
-                    viewStore.send(.coreAction(.onAppActivate))
-                case .inactive, .background, _:
-                    break
-                }
+        WindowGroup {
+            MainView()
+                .environmentObject(coreStore)
+        }
+        .onChange(of: scenePhase) { phase in
+            switch phase {
+            case .active:
+                // TODO: Authorization
+                MusicPlayers.AppleMusic().requestAuthorizationIfNeeded()
+                coreStore.send(.onAppActivate)
+            case .inactive, .background, _:
+                break
             }
         }
     }

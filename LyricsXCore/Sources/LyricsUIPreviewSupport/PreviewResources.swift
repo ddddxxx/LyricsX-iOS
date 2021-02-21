@@ -43,6 +43,7 @@ public extension PreviewResources {
         var searching = LyricsSearchingState(track: track)
         searching.currentLyrics = lyrics
         searching.searchResultSorted = [lyrics]
+        searching.searchTerm = .info(title: track.title!, artist: track.artist!)
         let progressing = LyricsProgressingState(lyrics: lyrics, playbackState: playbackState)
         return LyricsXCoreState(playerState: player, searchingState: searching, progressingState: progressing)
     }

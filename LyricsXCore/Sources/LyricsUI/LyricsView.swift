@@ -16,21 +16,16 @@ import MusicPlayer
 
 public struct LyricsView: View {
     
-    public enum AutoScrollState {
-        case focusing
-        case awaiting
-        case none
-    }
-    
     @EnvironmentObject
     public var coreStore: ViewStore<LyricsXCoreState, LyricsXCoreAction>
     
-    @State
-    public var autoScrollState: AutoScrollState = .focusing
+    @Binding
+    public var isAutoScrollEnabled: Bool
     
     public var showTranslation: Bool
     
-    public init(showTranslation: Bool) {
+    public init(isAutoScrollEnabled: Binding<Bool>, showTranslation: Bool) {
+        self._isAutoScrollEnabled = isAutoScrollEnabled
         self.showTranslation = showTranslation
     }
     
@@ -56,20 +51,27 @@ public struct LyricsView: View {
                     .gesture(
                         DragGesture()
                             .onChanged { _ in
-                                autoScrollState = .none
-                            }
-                            .onEnded { _ in
-                                autoScrollState = .awaiting
+                                isAutoScrollEnabled = false
                             }
                     )
-                    .onChange(of: progressing.currentLineIndex) { _ in
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            self.autoScrollIfNeeded(scrollProxy: scrollProxy)
+                    .onChange(of: progressing.currentLineIndex) { index in
+                        if isAutoScrollEnabled, let index = index {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                scrollProxy.scrollTo(index, anchor: .center)
+                            }
                         }
                     }
-                    .onChange(of: autoScrollState) { _ in
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            self.autoScrollIfNeeded(scrollProxy: scrollProxy)
+                    .onChange(of: isAutoScrollEnabled) { enabled in
+                        if enabled, let index = coreStore.progressingState?.currentLineIndex {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                scrollProxy.scrollTo(index, anchor: .center)
+                            }
+                        }
+                    }
+                    .onChange(of: showTranslation) { _ in
+                        if let index = coreStore.progressingState?.currentLineIndex {
+                            scrollProxy.scrollTo(index, anchor: .center)
+                            isAutoScrollEnabled = true
                         }
                     }
                 }
@@ -80,24 +82,14 @@ public struct LyricsView: View {
         }
         
     }
-    
-    private func autoScrollIfNeeded(scrollProxy: ScrollViewProxy) {
-        switch autoScrollState {
-        case .focusing:
-            if let index = coreStore.progressingState?.currentLineIndex {
-                scrollProxy.scrollTo(index, anchor: .center)
-            }
-        case .awaiting:
-            autoScrollState = .focusing
-        case .none:
-            break
-        }
-    }
 }
 
 import LyricsUIPreviewSupport
 
 struct LyricsView_Previews: PreviewProvider {
+    
+    @State
+    static var isAutoScrollEnabled = true
     
     static var previews: some View {
         let store = Store(
@@ -111,13 +103,13 @@ struct LyricsView_Previews: PreviewProvider {
             environment: .default)
         let viewStore = ViewStore(store)
         return Group {
-            LyricsView(showTranslation: true)
+            LyricsView(isAutoScrollEnabled: $isAutoScrollEnabled, showTranslation: true)
                 .environmentObject(viewStore)
                 .padding()
                 .background(Color.systemBackground)
                 .environment(\.colorScheme, .light)
             
-            LyricsView(showTranslation: true)
+            LyricsView(isAutoScrollEnabled: $isAutoScrollEnabled, showTranslation: true)
                 .environmentObject(viewStore)
                 .padding()
                 .background(Color.systemBackground)
