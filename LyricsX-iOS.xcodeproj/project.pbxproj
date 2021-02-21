@@ -16,6 +16,8 @@
 		BB64F5E125D292DB00555F84 /* NowPlayingLyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB64F5E025D292DB00555F84 /* NowPlayingLyricsView.swift */; };
 		BB850EB925CFDC7B00172554 /* NowPlayingToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB850EB825CFDC7B00172554 /* NowPlayingToolbarItem.swift */; };
 		BBB48F8D25E247EE00EFC274 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB48F8C25E247EE00EFC274 /* SearchBar.swift */; };
+		BBB48F9525E251FB00EFC274 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = BBB48F9425E251FB00EFC274 /* SFSafeSymbols */; };
+		BBB48F9925E2524600EFC274 /* SFSymbol+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB48F9825E2524600EFC274 /* SFSymbol+View.swift */; };
 		BBC7703225D196C600FD5E66 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7703125D196C600FD5E66 /* Either.swift */; };
 		BBEF4BC525D1002A008856DF /* FeatherEdgeMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF4BC425D1002A008856DF /* FeatherEdgeMask.swift */; };
 		BBEF4BCD25D11933008856DF /* LyricsSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF4BCC25D11933008856DF /* LyricsSearchView.swift */; };
@@ -33,6 +35,7 @@
 		BB64F5E025D292DB00555F84 /* NowPlayingLyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingLyricsView.swift; sourceTree = "<group>"; };
 		BB850EB825CFDC7B00172554 /* NowPlayingToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingToolbarItem.swift; sourceTree = "<group>"; };
 		BBB48F8C25E247EE00EFC274 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		BBB48F9825E2524600EFC274 /* SFSymbol+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SFSymbol+View.swift"; sourceTree = "<group>"; };
 		BBC7703125D196C600FD5E66 /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		BBEF4BC425D1002A008856DF /* FeatherEdgeMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatherEdgeMask.swift; sourceTree = "<group>"; };
 		BBEF4BCC25D11933008856DF /* LyricsSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsSearchView.swift; sourceTree = "<group>"; };
@@ -43,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBB48F9525E251FB00EFC274 /* SFSafeSymbols in Frameworks */,
 				BB64F5D525D2875200555F84 /* LyricsXCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				BB64F5DB25D2905700555F84 /* View+ResignKeyboard.swift */,
+				BBB48F9825E2524600EFC274 /* SFSymbol+View.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -144,6 +149,7 @@
 			name = "LyricsX-iOS";
 			packageProductDependencies = (
 				BB64F5D425D2875200555F84 /* LyricsXCore */,
+				BBB48F9425E251FB00EFC274 /* SFSafeSymbols */,
 			);
 			productName = iOS;
 			productReference = BB517E5F24A3257C00FDAD03 /* LyricsX.app */;
@@ -172,6 +178,9 @@
 				Base,
 			);
 			mainGroup = BB517E5224A3257A00FDAD03;
+			packageReferences = (
+				BBB48F9325E251FB00EFC274 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */,
+			);
 			productRefGroup = BB517E6024A3257C00FDAD03 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -203,6 +212,7 @@
 				BB60CBC324A32C36004CF149 /* SpotifyiOS.swift in Sources */,
 				BB64F5E125D292DB00555F84 /* NowPlayingLyricsView.swift in Sources */,
 				BBC7703225D196C600FD5E66 /* Either.swift in Sources */,
+				BBB48F9925E2524600EFC274 /* SFSymbol+View.swift in Sources */,
 				BBEF4BCD25D11933008856DF /* LyricsSearchView.swift in Sources */,
 				BBB48F8D25E247EE00EFC274 /* SearchBar.swift in Sources */,
 				BBEF4BC525D1002A008856DF /* FeatherEdgeMask.swift in Sources */,
@@ -392,10 +402,26 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		BBB48F9325E251FB00EFC274 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/piknotech/SFSafeSymbols";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		BB64F5D425D2875200555F84 /* LyricsXCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LyricsXCore;
+		};
+		BBB48F9425E251FB00EFC274 /* SFSafeSymbols */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BBB48F9325E251FB00EFC274 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */;
+			productName = SFSafeSymbols;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

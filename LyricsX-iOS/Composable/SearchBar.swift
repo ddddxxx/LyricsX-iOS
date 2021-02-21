@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import SFSafeSymbols
 
 // search bar with a clear button, a cancel button, and automatically hide navigation bar when searching
 struct SearchBar: View {
@@ -31,7 +32,7 @@ struct SearchBar: View {
     var body: some View {
         HStack {
             HStack {
-                Image(systemName: "magnifyingglass")
+                SFSymbol.magnifyingglass
                 
                 TextField("search", text: $searchText, onEditingChanged: { isEditing in
                     self.showCancelButton = true
@@ -43,7 +44,7 @@ struct SearchBar: View {
                     Button {
                         searchText = ""
                     } label: {
-                        Image(systemName: "xmark.circle.fill")
+                        SFSymbol.xmarkCircleFill
                     }
                 }
             }

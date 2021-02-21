@@ -9,6 +9,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import SFSafeSymbols
 import LyricsCore
 import MusicPlayer
 import LyricsXCore
@@ -35,14 +36,14 @@ struct NowPlayingLyricsView: View {
                     Button {
                         showTranslation.toggle()
                     } label: {
-                        Image(systemName: "textformat")
+                        SFSymbol.textformat
                     }
                     
                     if !isAutoScrollEnabled {
                         Button {
                             isAutoScrollEnabled = true
                         } label: {
-                            Image(systemName: "rectangle.arrowtriangle.2.inward")
+                            SFSymbol.rectangleArrowtriangle2Inward
                         }
                     }
                     
