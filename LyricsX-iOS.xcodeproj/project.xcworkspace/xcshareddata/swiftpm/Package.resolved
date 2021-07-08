@@ -6,17 +6,8 @@
         "repositoryURL": "https://github.com/pointfreeco/combine-schedulers",
         "state": {
           "branch": null,
-          "revision": "8eab6ad841ccc420f29f3e77e17e7b260841b50a",
-          "version": "0.2.0"
-        }
-      },
-      {
-        "package": "CombineX",
-        "repositoryURL": "https://github.com/cx-org/CombineX",
-        "state": {
-          "branch": null,
-          "revision": "96cd76ccddac5d0493ebd91d69f1e6e9ccb58f5f",
-          "version": "0.3.0"
+          "revision": "c37e5ae8012fb654af776cc556ff8ae64398c841",
+          "version": "0.5.0"
         }
       },
       {
@@ -24,8 +15,26 @@
         "repositoryURL": "https://github.com/cx-org/CXExtensions",
         "state": {
           "branch": null,
-          "revision": "6843af94bfaedfe90df1435c1a6c83cc3366a62b",
-          "version": "0.3.0"
+          "revision": "4790ecd6a6c0e796d776a28a820b552f7e8f6abd",
+          "version": "0.4.0"
+        }
+      },
+      {
+        "package": "CXShim",
+        "repositoryURL": "https://github.com/cx-org/CXShim",
+        "state": {
+          "branch": null,
+          "revision": "82fecc246c7ca9f0ac1656b8199b7956e64d68f3",
+          "version": "0.4.0"
+        }
+      },
+      {
+        "package": "CXTest",
+        "repositoryURL": "https://github.com/cx-org/CXTest",
+        "state": {
+          "branch": null,
+          "revision": "929ce7cbd3005bc9356ae826bb65ee2611379b17",
+          "version": "0.4.0"
         }
       },
       {
@@ -41,9 +50,9 @@
         "package": "LyricsKit",
         "repositoryURL": "https://github.com/ddddxxx/LyricsKit",
         "state": {
-          "branch": "master",
-          "revision": "8c018196326d1820573fc58665898ccd0e17f681",
-          "version": null
+          "branch": null,
+          "revision": "5506ee497ca689ed1686655ebb11e8ee29cc24cb",
+          "version": "0.11.0"
         }
       },
       {
@@ -51,8 +60,8 @@
         "repositoryURL": "https://github.com/ddddxxx/MusicPlayer",
         "state": {
           "branch": null,
-          "revision": "e652b184bc91b003dfc34cce88aaaf20b33fb33a",
-          "version": "0.7.0"
+          "revision": "b7d8d7b3d8f148d4a6796b8ab06bbf5270a76186",
+          "version": "0.8.0"
         }
       },
       {
@@ -60,8 +69,8 @@
         "repositoryURL": "https://github.com/ddddxxx/Regex",
         "state": {
           "branch": null,
-          "revision": "739734521806e17a60ba8c439050ae7ada062551",
-          "version": "0.2.0"
+          "revision": "c0ad0a7e9a48989d9688c2b524a1e69b6293b733",
+          "version": "1.0.1"
         }
       },
       {
@@ -87,8 +96,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-composable-architecture",
         "state": {
           "branch": null,
-          "revision": "e51fb00d1f4bfacda7d8e4deef0a8c1757192839",
-          "version": "0.13.0"
+          "revision": "3ca8249bd3262e9837c6cb4d352cc58e370e33fc",
+          "version": "0.20.0"
         }
       },
       {
@@ -96,8 +105,17 @@
         "repositoryURL": "https://github.com/ddddxxx/SwiftCF",
         "state": {
           "branch": null,
-          "revision": "845455788ed18a7885eca3c00114372d6ba1aa4c",
-          "version": "0.1.6"
+          "revision": "72775c4b4dfceba8f6f43820d50f9286dc97160d",
+          "version": "0.2.1"
+        }
+      },
+      {
+        "package": "xctest-dynamic-overlay",
+        "repositoryURL": "https://github.com/pointfreeco/xctest-dynamic-overlay",
+        "state": {
+          "branch": null,
+          "revision": "603974e3909ad4b48ba04aad7e0ceee4f077a518",
+          "version": "0.1.0"
         }
       }
     ]
